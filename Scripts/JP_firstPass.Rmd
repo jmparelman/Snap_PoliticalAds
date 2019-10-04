@@ -1,0 +1,151 @@
+---
+title: "R Notebook"
+output: html_notebook
+
+
+
+library(tidyverse)
+
+setwd('~/Desktop/Snapchat_PoliAdds/')
+df.18 = read.csv('_2018.csv')
+df.19 = read.csv('_2019.csv')
+df.18$year = '2018'
+df.19$year = '2019'
+
+df <- rbind(df.18,df.19)
+
+nrow(df.18)
+nrow(df.19)
+
+ncol(df.19)
+ncol(df.18)
+
+# AD ID - unique
+length(unique(df.18$ADID))
+
+# CreativeUrL
+
+# unique
+length(unique(df.18$CreativeUrl))
+length(unique(df.19$CreativeUrl))
+
+df.18 %>%
+  group_by(CreativeUrl) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+df.19 %>%
+  group_by(CreativeUrl) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+# look at volume of ads over time for each year
+
+# spending in 1$
+df.18$Spend
+df.19$Spend
+
+df %>%
+  ggplot(aes(x = Spend, fill = year)) +
+  geom_histogram()
+
+df %>% 
+  group_by(year) %>%
+  summarise(m = mean(Spend),
+            sd = sd(Spend),
+            min = min(Spend),
+            max = max(Spend),
+            median = median(Spend))
+
+# someone spent $85,000, who was it?
+
+# in 2018 the most spent on SnapChat political advertisement was $23,742, and was payed for by a PAC organization called,
+# Nevada Conservation League PAC. 
+
+m2018 = df[df$Spend == 23742,]
+m2018$OrganizationName
+m2018$PayingAdvertiserName
+m2018$CountryCode
+m2018$CreativeUrl
+
+# this advertisemt was run by the Australian Electoral Commision in 2019, from from April 29th to May 17th. The AEC is under
+# the Australian Government Department of Finance.
+df[df$Spend == 85000,]
+
+
+
+```
+
+
+```{r}
+
+library(tidyverse)
+
+setwd('~/Desktop/Snapchat_PoliAdds/')
+df.18 = read.csv('_2018.csv')
+df.19 = read.csv('_2019.csv')
+df.18$year = '2018'
+df.19$year = '2019'
+
+df <- rbind(df.18,df.19)
+
+nrow(df.18)
+nrow(df.19)
+
+ncol(df.19)
+ncol(df.18)
+
+# AD ID - unique
+length(unique(df.18$ADID))
+
+# CreativeUrL
+
+# unique
+length(unique(df.18$CreativeUrl))
+length(unique(df.19$CreativeUrl))
+
+df.18 %>%
+  group_by(CreativeUrl) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+df.19 %>%
+  group_by(CreativeUrl) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+# look at volume of ads over time for each year
+
+# spending in 1$
+df.18$Spend
+df.19$Spend
+
+df %>%
+  ggplot(aes(x = Spend, fill = year)) +
+  geom_histogram()
+
+df %>% 
+  group_by(year) %>%
+  summarise(m = mean(Spend),
+            sd = sd(Spend),
+            min = min(Spend),
+            max = max(Spend),
+            median = median(Spend))
+
+# someone spent $85,000, who was it?
+
+# in 2018 the most spent on SnapChat political advertisement was $23,742, and was payed for by a PAC organization called,
+# Nevada Conservation League PAC. 
+
+m2018 = df[df$Spend == 23742,]
+m2018$OrganizationName
+m2018$PayingAdvertiserName
+m2018$CountryCode
+m2018$CreativeUrl
+
+# this advertisemt was run by the Australian Electoral Commision in 2019, from from April 29th to May 17th. The AEC is under
+# the Australian Government Department of Finance.
+df[df$Spend == 85000,]
+
+```
+
